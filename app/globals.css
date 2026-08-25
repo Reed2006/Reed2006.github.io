@@ -11,6 +11,7 @@
   --line: rgba(22, 22, 22, 0.1);
   --paper: #fbfaf7;
   --paper-muted: #f0eee7;
+  --map-paper: #f5eee4;
   --accent: #9a744e;
   --accent-dark: #78583a;
 }
@@ -175,7 +176,7 @@ img {
   box-shadow: 0 14px 34px rgba(44, 34, 26, 0.08);
 }
 
-.rail-menu span {
+.rail-index {
   color: rgba(22, 22, 22, 0.36);
   font-family: var(--font-mono), monospace;
   font-size: 0.76rem;
@@ -738,8 +739,10 @@ img {
 }
 
 .story-section {
+  position: relative;
   display: grid;
   align-items: center;
+  min-height: 100dvh;
   overflow: hidden;
   padding: calc(var(--nav-height) + 34px) clamp(18px, 4vw, 48px) 54px;
   background: var(--paper);
@@ -831,6 +834,29 @@ img {
   min-width: 0;
 }
 
+.section-map-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.section-map-background::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(245, 238, 228, 0.2), rgba(245, 238, 228, 0.08) 44%, rgba(245, 238, 228, 0.16)),
+    linear-gradient(180deg, rgba(245, 238, 228, 0.1), rgba(245, 238, 228, 0.18));
+}
+
+.section-map-background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .about-section {
   align-items: start;
   padding-top: clamp(120px, 16vh, 170px);
@@ -911,6 +937,10 @@ img {
   align-items: start;
   padding-top: clamp(120px, 14vh, 156px);
   background: var(--paper);
+}
+
+.contact-section {
+  background: var(--map-paper);
 }
 
 .selected-inner {

@@ -56,6 +56,14 @@ const overviewItems = [
   }
 ];
 
+const sectionBackgrounds = {
+  about: { src: "/backgrounds/huzhou.png" },
+  research: { src: "/backgrounds/shanghai.png" },
+  experience: { src: "/backgrounds/hong-kong.png" },
+  coursework: { src: "/backgrounds/san-diego.png" },
+  posts: { src: "/backgrounds/vancouver.png" }
+};
+
 function NavBar() {
   return (
     <nav className="site-nav" aria-label="Primary navigation">
@@ -114,13 +122,21 @@ function ProfileRail() {
       <nav className="rail-menu" aria-label="Compressed section navigation">
         {overviewItems.map((item) => (
           <a key={item.href} data-nav-link href={item.href}>
-            <span>{item.index}</span>
+            <span className="rail-index">{item.index}</span>
             <strong>{item.label}</strong>
             <i aria-hidden="true" />
           </a>
         ))}
       </nav>
     </aside>
+  );
+}
+
+function SectionBackground({ src }: { src: string }) {
+  return (
+    <div className="section-map-background" aria-hidden="true">
+      <img src={src} alt="" />
+    </div>
   );
 }
 
@@ -211,6 +227,7 @@ export default function Page() {
         </section>
 
         <section id="about" data-section className="story-section about-section">
+          <SectionBackground {...sectionBackgrounds.about} />
           <div className="about-inner">
             <div className="about-heading fade-up">
               <h2>About</h2>
@@ -256,6 +273,7 @@ export default function Page() {
         </section>
 
         <section id="research" data-section className="story-section selected-section">
+          <SectionBackground {...sectionBackgrounds.research} />
           <div className="selected-inner">
             <div className="about-heading fade-up">
               <h2>Selected works</h2>
@@ -331,6 +349,7 @@ export default function Page() {
         </section>
 
         <section id="experience" data-section className="story-section selected-section">
+          <SectionBackground {...sectionBackgrounds.experience} />
           <div className="selected-inner">
             <div className="about-heading compact-heading fade-up">
               <h2>Selected working experience & Projects</h2>
@@ -409,6 +428,7 @@ export default function Page() {
         </section>
 
         <section id="coursework" data-section className="story-section selected-section">
+          <SectionBackground {...sectionBackgrounds.coursework} />
           <div className="selected-inner">
             <div className="about-heading fade-up">
               <h2>Selected Course works</h2>
@@ -434,6 +454,7 @@ export default function Page() {
         </section>
 
         <section id="posts" data-section className="story-section selected-section">
+          <SectionBackground {...sectionBackgrounds.posts} />
           <div className="selected-inner">
             <div className="about-heading fade-up">
               <h2>Posts and Public goods</h2>
@@ -492,7 +513,7 @@ export default function Page() {
           </div>
         </section>
 
-        <section id="contact" data-section className="story-section selected-section">
+        <section id="contact" data-section className="story-section selected-section contact-section">
           <div className="selected-inner">
             <div className="about-heading fade-up">
               <h2>Contact</h2>
