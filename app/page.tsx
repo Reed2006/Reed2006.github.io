@@ -1,494 +1,550 @@
 import { profile } from "@/profile";
 import ScrollReveal from "./scroll-reveal";
 
-/* ── Tiny helpers ──────────────────────────────────────────────── */
+const navItems = [
+  { label: "Overview", href: "#top" },
+  { label: "About", href: "#about" },
+  { label: "Research", href: "#research" },
+  { label: "Experience", href: "#experience" },
+  { label: "Coursework", href: "#coursework" },
+  { label: "Posts", href: "#posts" },
+  { label: "Contact", href: "#contact" }
+];
+
+const overviewItems = [
+  {
+    index: "01",
+    label: "About",
+    href: "#about",
+    text: ""
+  },
+  {
+    index: "02",
+    label: "Selected works",
+    href: "#research",
+    text: ""
+  },
+  {
+    index: "03",
+    label: "Selected working experience & Projects",
+    href: "#experience",
+    text: ""
+  },
+  {
+    index: "04",
+    label: "Selected Course works",
+    href: "#coursework",
+    text: ""
+  },
+  {
+    index: "05",
+    label: "CV",
+    href: profile.cvHref,
+    text: ""
+  },
+  {
+    index: "06",
+    label: "Posts and Public goods",
+    href: "#posts",
+    text: ""
+  },
+  {
+    index: "07",
+    label: "Contact",
+    href: "#contact",
+    text: ""
+  }
+];
 
 function NavBar() {
-  const items = [
-    { label: "About", href: "#about" },
-    { label: "Experience", href: "#experience" },
-    { label: "Research", href: "#research" },
-    { label: "Skills", href: "#skills" },
-    { label: "Courses", href: "#courses" },
-    { label: "Contact", href: "#contact" }
-  ];
-
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 nav-blur bg-white/70 border-b border-paper-200/60">
-      <div className="mx-auto max-w-[1200px] px-6 flex items-center justify-between h-14">
-        <a href="#" className="font-serif text-lg font-semibold text-ink-950 tracking-tight">
-          {profile.displayName}
+    <nav className="site-nav" aria-label="Primary navigation">
+      <div className="site-nav-inner">
+        <a data-nav-link href="#top" className="site-mark">
+          <span>{profile.displayName}</span>
+          <span>{profile.name}</span>
         </a>
-        <div className="hidden md:flex items-center gap-8">
-          {items.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="text-sm text-ink-950/70 hover:text-ink-950 transition-colors link-underline"
-            >
+
+        <div className="site-nav-links">
+          {navItems.map((item) => (
+            <a key={item.href} data-nav-link href={item.href}>
               {item.label}
             </a>
           ))}
-          <a
-            href={profile.cvHref}
-            className="text-sm font-medium text-white bg-ink-950 px-4 py-1.5 rounded-full hover:bg-ink-900 transition-colors"
-          >
-            Resume
-          </a>
         </div>
+
+        <a href={profile.cvHref} className="site-nav-cta">
+          CV
+        </a>
+
+        <details className="mobile-nav">
+          <summary aria-label="Open navigation">
+            <span />
+            <span />
+            <span />
+          </summary>
+          <div className="mobile-nav-panel">
+            {navItems.map((item) => (
+              <a key={item.href} data-nav-link href={item.href}>
+                {item.label}
+              </a>
+            ))}
+            <a href={profile.cvHref}>CV</a>
+          </div>
+        </details>
       </div>
     </nav>
   );
 }
 
-function SectionLabel({ children }: { children: React.ReactNode }) {
+function ProfileRail() {
   return (
-    <p className="text-xs font-medium tracking-[0.18em] uppercase text-accent-600 mb-3">
-      {children}
-    </p>
+    <aside className="profile-rail" aria-label="Section profile navigation">
+      <div className="rail-profile">
+        <div className="rail-portrait">
+          <img src={profile.photo.src} alt={profile.photo.alt} />
+        </div>
+        <h2 className="hover-name" aria-label="Yuecheng He">
+          <span>Yuecheng He</span>
+          <span aria-hidden="true">Reed He</span>
+        </h2>
+        <p>Undergrad. at Fudan university</p>
+      </div>
+
+      <nav className="rail-menu" aria-label="Compressed section navigation">
+        {overviewItems.map((item) => (
+          <a key={item.href} data-nav-link href={item.href}>
+            <span>{item.index}</span>
+            <strong>{item.label}</strong>
+            <i aria-hidden="true" />
+          </a>
+        ))}
+      </nav>
+    </aside>
   );
 }
-
-function SectionHeading({ children }: { children: React.ReactNode }) {
-  return (
-    <h2 className="font-serif text-3xl md:text-5xl font-semibold tracking-tight text-ink-950 leading-[1.1]">
-      {children}
-    </h2>
-  );
-}
-
-function ArrowLink({ href, label }: { href: string; label: string }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      className="inline-flex items-center gap-1.5 text-sm font-medium text-accent-600 hover:text-accent-700 transition-colors"
-    >
-      {label}
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="mt-px">
-        <path d="M3 13L13 3M13 3H5M13 3v8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-      </svg>
-    </a>
-  );
-}
-
-/* ── Page ──────────────────────────────────────────────────────── */
 
 export default function Page() {
+  const primaryPaper = profile.workingPapers[0];
+  const primaryHackathon = profile.hackathonExperience[0];
+  const primaryEducation = profile.education[0];
+
   return (
     <>
       <ScrollReveal />
       <NavBar />
+      <ProfileRail />
 
-      {/* ════════ HERO ════════ */}
-      <section className="section-full overflow-hidden bg-[linear-gradient(135deg,#f7f2ea_0%,#efe4d7_48%,#d8c6b8_100%)]">
-        <div className="absolute inset-0">
-          <div className="absolute left-[-8%] top-20 h-56 w-56 rounded-full bg-white/45 blur-3xl" />
-          <div className="absolute right-[-4%] top-1/4 h-72 w-72 rounded-full bg-[#c89e7a]/20 blur-3xl" />
-          <div className="absolute bottom-[-12%] left-1/3 h-64 w-64 rounded-full bg-[#8b6b52]/10 blur-3xl" />
-        </div>
-        <div className="relative z-10 mx-auto grid w-full max-w-[1200px] items-center gap-16 px-6 py-28 md:grid-cols-[1.1fr_0.9fr] md:py-0">
-          <div className="max-w-2xl">
-            <p className="mb-5 text-sm font-medium uppercase tracking-[0.28em] text-ink-950/45">
-              Welcome
-            </p>
-            <h1 className="font-serif text-5xl font-semibold tracking-tight text-ink-950 leading-[1.03] md:text-7xl">
-              Hi I&apos;m Yuecheng He, you can call me Reed.
-            </h1>
-            <p className="mt-6 max-w-[28ch] text-xl leading-relaxed text-ink-950/70 md:text-2xl">
-              I&apos;m an Information system researcher and Product manager
-            </p>
-            <div className="mt-10 flex flex-wrap gap-3">
-              {profile.links.map((l) => (
-                <a
-                  key={l.href}
-                  href={l.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-ink-950/10 bg-white/75 px-5 py-2 text-sm font-medium text-ink-950 shadow-sm backdrop-blur-sm transition hover:bg-white"
-                >
-                  {l.label}
+      <main className="site-shell">
+        <section id="top" data-section className="overview-section">
+          <div className="overview-backdrop">
+            <img src={profile.heroBg} alt="" />
+          </div>
+
+          <div className="overview-inner">
+            <div className="overview-portrait fade-up">
+              <img
+                src="/Image_sumiao.png"
+                alt="Sketch portrait of Reed (Yuecheng He)"
+                className="portrait-base"
+              />
+              <img
+                src={profile.photo.src}
+                alt={profile.photo.alt}
+                className="portrait-hover"
+              />
+              <span className="portrait-shadow" aria-hidden="true" />
+            </div>
+
+            <div className="overview-copy fade-up">
+              <h1 className="hover-name" aria-label="Yuecheng He">
+                <span>Yuecheng He</span>
+                <span aria-hidden="true">Reed He</span>
+              </h1>
+              <p className="overview-role">Undergrad. at Fudan university</p>
+              <p className="overview-summary">
+                I will visit the University of California, San diego in the fall
+                of 2026, and then British Columbia Sauder School of Business in
+                the winter of 2026.
+              </p>
+              <p className="overview-summary">
+                I&apos;m expected to graduate from Fudan university with B.Econ
+                and B.S in Artificial intelligence in 2028.
+              </p>
+            </div>
+
+            <aside className="overview-menu fade-up" aria-label="Overview links">
+              {overviewItems.map((item) => (
+                <a key={item.href} href={item.href} className="overview-menu-item">
+                  <span>{item.index}</span>
+                  <strong>{item.label}</strong>
+                  <em>{item.text}</em>
+                  <i aria-hidden="true" />
                 </a>
               ))}
-              <a
-                href={`mailto:${profile.email}`}
-                className="inline-flex items-center gap-2 rounded-full border border-ink-950/10 bg-ink-950 px-5 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-ink-900"
-              >
-                Email
-              </a>
-            </div>
-          </div>
-          <div className="mx-auto w-full max-w-[320px] md:max-w-[420px]">
-            <div className="relative aspect-square rounded-full border border-white/70 bg-white/35 p-4 shadow-[0_32px_80px_rgba(90,65,45,0.22)] backdrop-blur-md">
-              <div className="absolute inset-6 rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.7),rgba(255,255,255,0.12))]" />
-              <img
-                src="/welcome.jpg"
-                alt="Welcome portrait of Yuecheng He"
-                className="relative h-full w-full rounded-full border border-white/60 object-cover object-center"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 bounce-down">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-ink-950/40">
-            <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </div>
-      </section>
+            </aside>
 
-      {/* ════════ ABOUT ════════ */}
-      <section id="about" className="section-light py-24 md:py-32">
-        <div className="mx-auto max-w-[1200px] px-6">
-          <div className="fade-up grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-center">
-            <div className="md:col-span-5">
-              <div className="rounded-3xl overflow-hidden shadow-soft">
-                <img
-                  src={profile.photo.src}
-                  alt={profile.photo.alt}
-                  className="w-full aspect-[4/5] object-cover"
-                />
+            <div className="overview-interest fade-up">
+              <p>
+                My long-term research interest focuses on how technological
+                advancements(Especially AI) transform the society.
+              </p>
+              <p>
+                I&apos;m also open to the issues in Political Economy, Macro
+                finance and Industry Organization.
+              </p>
+            </div>
+          </div>
+
+          <a href="#about" className="scroll-cue" aria-label="Scroll to about section">
+            <span />
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M12 5v14M5 12l7 7 7-7"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </a>
+        </section>
+
+        <section id="about" data-section className="story-section about-section">
+          <div className="about-inner">
+            <div className="about-heading fade-up">
+              <h2>About</h2>
+              <span aria-hidden="true" />
+            </div>
+
+            <div className="about-content fade-up">
+              <div className="about-prose">
+                <p>
+                  I am an economics student interested in macroeconomics,
+                  information systems, and the innovation frontier in recent
+                  years — LLMs, agentic science, and related topics.
+                </p>
+                <p>
+                  I want to further my education after graduation, with long-term
+                  interest in how technology changes the society.
+                </p>
+              </div>
+
+              <div className="about-rule" aria-hidden="true" />
+
+              <div className="info-stack">
+                <div>
+                  <span>Education</span>
+                  <strong>{primaryEducation.school}</strong>
+                  <p>
+                    {primaryEducation.degree} / {primaryEducation.period}
+                  </p>
+                </div>
+                <div>
+                  <span>Location</span>
+                  <strong>{profile.location}</strong>
+                  <p>{profile.email}</p>
+                </div>
+                <div>
+                  <span>Selected Honors</span>
+                  <strong>National Scholarship</strong>
+                  <p>Yanbao Scholarship / Shupin Scholarship</p>
+                </div>
               </div>
             </div>
-            <div className="md:col-span-7">
-              <SectionLabel>About me</SectionLabel>
-              <SectionHeading>
-                Economics meets<br />Artificial Intelligence
-              </SectionHeading>
-              <p className="mt-6 text-base leading-relaxed text-ink-950/70 max-w-[55ch]">
-                {profile.bio}
-              </p>
-              <div className="mt-6 flex flex-wrap gap-2">
-                {profile.researchInterests.map((x) => (
-                  <span
-                    key={x}
-                    className="rounded-full border border-paper-200 bg-paper-100 px-3 py-1 text-sm text-ink-950/70"
+          </div>
+        </section>
+
+        <section id="research" data-section className="story-section selected-section">
+          <div className="selected-inner">
+            <div className="about-heading fade-up">
+              <h2>Selected works</h2>
+              <span aria-hidden="true" />
+            </div>
+
+            <article className="selected-card fade-up">
+              <header>
+                <h3>{primaryPaper.title}</h3>
+                <p>{primaryPaper.authors}</p>
+              </header>
+
+              <div className="selected-notes">
+                <span>Best paper of the undergraduate forum in Fudan university</span>
+                <span>Will be presented at 教育部拔尖人才培养基地年会</span>
+                <span>Available upon request</span>
+              </div>
+
+              <div className="selected-abstract">
+                <h4>Abstract</h4>
+                {primaryPaper.abstract && <p>{primaryPaper.abstract}</p>}
+              </div>
+            </article>
+
+            <article className="selected-card fade-up">
+              <header>
+                <h3>Quantity Up, Novelty Down: Generative AI and Research</h3>
+                <p>with Mingduo Zhao</p>
+              </header>
+
+              <div className="selected-notes">
+                <span>Accepted and will be presented at CIST2026</span>
+                <span>Available upon request</span>
+              </div>
+
+              <div className="selected-abstract">
+                <h4>Abstract</h4>
+                <p>
+                  Generative AI may increase the number of papers being written,
+                  but it might not necessarily improve the underlying ideas.
+                  This paper examines whether large language models (LLMs)
+                  increase research output while reducing the novelty of the work
+                  produced. A toy theory model clarifies two channels behind this
+                  hypothesis: a selection channel, in which lower writing costs
+                  bring more marginal ideas into circulation, and a homogenization
+                  channel, in which shared AI tools make written output more
+                  similar. Empirically, using 42,529 SSRN business working papers
+                  from 2021Q1 to 2025Q4, we identify the causal effect of LLM
+                  adoption using two complementary identification strategies.
+                  First, we compare English-as-a-Foreign-Language (EFL) and
+                  non-EFL researchers around a major increase in LLM capability,
+                  when frontier models began to perform at a level comparable to
+                  average humans. We treat EFL status as a proxy for higher
+                  LLM-adoption intensity because generative AI lowers
+                  English-writing costs more for non-native English researchers.
+                  Second, we replace the binary shock indicator with a continuous
+                  measure of frontier AI capability over time, which allows us to
+                  trace how successive improvements in LLM affect business
+                  research output and novelty. Across both designs, higher LLM
+                  exposure increases research output while reducing novelty. In
+                  the baseline difference-in-differences design, EFL paper counts
+                  rise by 34.3 percent relative to non-EFL counts, while average
+                  novelty falls by about 9 percent. The main effects are largely
+                  driven by new entrants, and that publication pressure amplifies
+                  the novelty decline. At the same time, screening institutions
+                  mitigate the novelty loss: published papers show no detectable
+                  decline, and the decline is substantially smaller among
+                  top-school authors.
+                </p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="experience" data-section className="story-section selected-section">
+          <div className="selected-inner">
+            <div className="about-heading compact-heading fade-up">
+              <h2>Selected working experience & Projects</h2>
+              <span aria-hidden="true" />
+            </div>
+
+            <div className="experience-card-list fade-up">
+              {profile.professionalExperience.map((item) => (
+                <article key={`${item.role}-${item.period}`} className="experience-card">
+                  <time>{item.period}</time>
+                  <h3>{item.role}</h3>
+                  <p>
+                    {item.companyUrl ? (
+                      <a href={item.companyUrl} target="_blank" rel="noreferrer">
+                        {item.company}
+                      </a>
+                    ) : (
+                      item.company
+                    )}
+                    {" / "}
+                    {item.location}
+                  </p>
+                  <ul>
+                    {item.bullets.map((bullet) => (
+                      <li key={bullet}>{bullet}</li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+
+              {profile.hackathonExperience.map((item) => (
+                <article key={`${item.event}-${item.location}`} className="experience-card">
+                  <time>{item.location}</time>
+                  <h3>{item.event}</h3>
+                  <p>
+                    {item.role}
+                    {item.award ? ` / ${item.award}` : ""}
+                  </p>
+                  <ul>
+                    {item.bullets.map((bullet) => (
+                      <li key={bullet}>{bullet}</li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+
+              <article className="experience-card">
+                <time>Product project</time>
+                <h3>
+                  <a
+                    href="https://github.com/DonkeyKing01/BriefyPet"
+                    target="_blank"
+                    rel="noreferrer"
                   >
-                    {x}
-                  </span>
+                    BriefyPet
+                  </a>
+                </h3>
+                <p>AI-powered desktop reading companion / Rust, Tauri, TypeScript</p>
+                <ul>
+                  <li>
+                    Built a desktop reading workflow that filters RSS sources and
+                    surfaces high-value information.
+                  </li>
+                  <li>
+                    Integrated LLM summarization to turn long-form feeds into
+                    concise, reviewable briefs.
+                  </li>
+                  <li>
+                    Designed the product around knowledge management and
+                    productivity use cases, with a public demo site.
+                  </li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="coursework" data-section className="story-section selected-section">
+          <div className="selected-inner">
+            <div className="about-heading fade-up">
+              <h2>Selected Course works</h2>
+              <span aria-hidden="true" />
+            </div>
+
+            <div className="course-grid fade-up">
+              {profile.courseCategories.map((category) => (
+                <article key={category.category} className="course-card">
+                  <h3>{category.category}</h3>
+                  <ul>
+                    {category.courses.map((course) => (
+                      <li key={course.name}>
+                        <span>{course.name}</span>
+                        {course.note && <strong>{course.note}</strong>}
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="posts" data-section className="story-section selected-section">
+          <div className="selected-inner">
+            <div className="about-heading fade-up">
+              <h2>Posts and Public goods</h2>
+              <span aria-hidden="true" />
+            </div>
+
+            <div className="experience-card-list fade-up">
+              <article className="experience-card">
+                <time>Public notes</time>
+                <h3>
+                  <a
+                    href="https://reed2006.github.io/Awesome_Notes_Site/"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Awesome Notes Site
+                  </a>
+                </h3>
+                <p>My public course-notes website, shared openly for everyone.</p>
+                <ul>
+                  <li>
+                    Organized course notes across economics, mathematics, AI,
+                    and programming.
+                  </li>
+                  <li>
+                    Maintained as an open knowledge base for review, reference,
+                    and peer learning.
+                  </li>
+                </ul>
+              </article>
+
+              <article className="experience-card">
+                <time>Chinese blog</time>
+                <h3>
+                  <a
+                    href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzkwNjcyMjQzMw==&scene=124#wechat_redirect"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Voice of Reed
+                  </a>
+                </h3>
+                <p>My WeChat public account for Chinese blog posts and essays.</p>
+                <ul>
+                  <li>
+                    Publishes Chinese writing on academic life, technology, and
+                    personal observations.
+                  </li>
+                  <li>
+                    Serves as a public outlet for longer-form notes outside the
+                    main academic homepage.
+                  </li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" data-section className="story-section selected-section">
+          <div className="selected-inner">
+            <div className="about-heading fade-up">
+              <h2>Contact</h2>
+              <span aria-hidden="true" />
+            </div>
+
+            <article className="selected-card contact-panel fade-up">
+              <header>
+                <h3>Open to research and product conversations</h3>
+                <p>
+                  I am open to collaborations, research opportunities, and
+                  conversations about economics, AI, and information systems.
+                </p>
+              </header>
+
+              <div className="overview-actions">
+                <a href={`mailto:${profile.email}`} className="button-primary">
+                  {profile.email}
+                </a>
+                {profile.links.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="button-secondary"
+                  >
+                    {link.label}
+                  </a>
                 ))}
               </div>
-              <div className="mt-8 grid grid-cols-2 gap-6">
-                <div>
-                  <p className="text-sm text-ink-950/50">Education</p>
-                  <p className="mt-1 text-sm font-medium text-ink-950">
-                    {profile.education[0].school}
-                  </p>
-                  <p className="text-sm text-ink-950/60">{profile.education[0].period}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-ink-950/50">Location</p>
-                  <p className="mt-1 text-sm font-medium text-ink-950">{profile.location}</p>
-                  <p className="text-sm text-ink-950/60">
-                    <a href={`mailto:${profile.email}`} className="link-underline">
-                      {profile.email}
-                    </a>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* ════════ PROFESSIONAL EXPERIENCE (Fudan.jpg background) ════════ */}
-      <section id="experience" className="relative py-24 md:py-32 overflow-hidden">
-        <div
-          className="section-bg"
-          style={{ backgroundImage: `url(/Fudan.jpg)` }}
-        />
-        <div className="hero-overlay" />
-        <div className="relative z-10 mx-auto max-w-[1200px] px-6">
-          <div className="fade-up mb-12">
-            <SectionLabel>
-              <span className="text-white/70">Professional Experience</span>
-            </SectionLabel>
-            <h2 className="font-serif text-3xl md:text-5xl font-semibold tracking-tight text-white leading-[1.1]">
-              Where I have worked
-            </h2>
+              <footer>
+                <span>{profile.footerNote}</span>
+                <span>
+                  {profile.name} / {profile.location}
+                </span>
+              </footer>
+            </article>
           </div>
-          <div className="stagger space-y-8">
-            {profile.professionalExperience.map((exp, i) => (
-              <div
-                key={`exp-${i}`}
-                className="rounded-3xl bg-black/30 border border-white/10 p-8 md:p-10 backdrop-blur-sm"
-              >
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                  <div className="flex-1">
-                    <p className="font-serif text-xl md:text-2xl font-semibold text-white">
-                      {exp.role}
-                    </p>
-                    <p className="mt-1 text-base text-white/70">
-                      {exp.companyUrl ? (
-                        <a
-                          href={exp.companyUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="font-medium text-accent-500 link-underline"
-                        >
-                          {exp.company}
-                        </a>
-                      ) : (
-                        <span className="font-medium text-white/90">{exp.company}</span>
-                      )}
-                      {" "}&middot; {exp.location}
-                    </p>
-                  </div>
-                  <p className="text-sm text-white/50 font-mono whitespace-nowrap">{exp.period}</p>
-                </div>
-                <ul className="mt-5 space-y-2">
-                  {exp.bullets.map((b, j) => (
-                    <li key={j} className="flex gap-3 text-[15px] leading-relaxed text-white/80">
-                      <span className="mt-2 h-1.5 w-1.5 rounded-full bg-accent-500 shrink-0" />
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ════════ HACKATHON (with background image) ════════ */}
-      <section className="section-full">
-        <div
-          className="section-bg"
-          style={{ backgroundImage: `url(${profile.hackathonExperience[0].image})` }}
-        />
-        <div className="relative z-10 mx-auto max-w-[1200px] px-6 w-full py-24 md:py-32">
-          <div className="fade-up max-w-2xl">
-            <SectionLabel>
-              <span className="text-white/70">Hackathon</span>
-            </SectionLabel>
-            <h2 className="font-serif text-3xl md:text-5xl font-semibold tracking-tight text-white leading-[1.1]">
-              {profile.hackathonExperience[0].event}
-            </h2>
-            {profile.hackathonExperience[0].award && (
-              <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-accent-500/90 px-4 py-1.5 text-sm font-medium text-white">
-                {profile.hackathonExperience[0].award}
-              </p>
-            )}
-            <p className="mt-4 text-base text-white/70">
-              {profile.hackathonExperience[0].role} &middot; {profile.hackathonExperience[0].location}
+        {primaryHackathon && (
+          <section className="compact-note" aria-label="Hackathon highlight">
+            <span>{primaryHackathon.award}</span>
+            <strong>{primaryHackathon.event}</strong>
+            <p>
+              {primaryHackathon.role} / {primaryHackathon.location}
             </p>
-            <ul className="mt-6 space-y-2">
-              {profile.hackathonExperience[0].bullets.map((b, j) => (
-                <li key={j} className="flex gap-3 text-[15px] leading-relaxed text-white/80">
-                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-accent-500 shrink-0" />
-                  {b}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-8 flex flex-wrap gap-3">
-              {profile.hackathonExperience[0].links.map((l) => (
-                <a
-                  key={l.href}
-                  href={l.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-5 py-2 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-white/20"
-                >
-                  {l.label}
-                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-                    <path d="M3 13L13 3M13 3H5M13 3v8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ════════ RESEARCH / WORKING PAPERS (with Academic.jpg + abstract) ════════ */}
-      <section id="research" className="section-light py-24 md:py-32">
-        <div className="mx-auto max-w-[1200px] px-6">
-          <div className="fade-up mb-12">
-            <SectionLabel>Academic Research</SectionLabel>
-            <SectionHeading>Working Papers</SectionHeading>
-          </div>
-          <div className="stagger space-y-6">
-            {profile.workingPapers.map((p, i) => (
-              <div
-                key={`paper-${i}`}
-                className="rounded-3xl bg-white/80 border border-paper-200 overflow-hidden"
-              >
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-0">
-                  {p.image && (
-                    <div className="md:col-span-5">
-                      <img
-                        src={p.image}
-                        alt=""
-                        className="w-full h-full object-cover aspect-[16/10] md:aspect-auto"
-                      />
-                    </div>
-                  )}
-                  <div className={`${p.image ? "md:col-span-7" : ""} p-8 md:p-10 flex flex-col justify-center`}>
-                    <p className="font-serif text-xl md:text-2xl font-semibold text-ink-950 leading-snug">
-                      {p.title}
-                    </p>
-                    <p className="mt-2 text-[15px] text-ink-950/60">{p.authors}</p>
-                    {p.abstract && (
-                      <p className="mt-4 text-[15px] leading-relaxed text-ink-950/70">
-                        {p.abstract}
-                      </p>
-                    )}
-                    <div className="mt-5 flex flex-wrap gap-3">
-                      {p.links.map((l) => (
-                        <ArrowLink key={l.href} href={l.href} label={l.label} />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ════════ LEADERSHIP (with background image) ════════ */}
-      <section className="section-full">
-        <div
-          className="section-bg"
-          style={{ backgroundImage: `url(${profile.leadership[0].image})` }}
-        />
-        <div className="relative z-10 mx-auto max-w-[1200px] px-6 w-full py-24 md:py-32">
-          <div className="fade-up max-w-2xl">
-            <SectionLabel>
-              <span className="text-white/70">Leadership</span>
-            </SectionLabel>
-            <h2 className="font-serif text-3xl md:text-5xl font-semibold tracking-tight text-white leading-[1.1]">
-              {profile.leadership[0].org}
-            </h2>
-            <p className="mt-4 text-lg text-white/80 font-medium">
-              {profile.leadership[0].role}
-            </p>
-            <p className="mt-4 text-base leading-relaxed text-white/70 max-w-[55ch]">
-              {profile.leadership[0].description}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ════════ SKILLS & PROJECTS ════════ */}
-      <section id="skills" className="section-warm py-24 md:py-32">
-        <div className="mx-auto max-w-[1200px] px-6">
-          <div className="fade-up mb-12">
-            <SectionLabel>Skills & Projects</SectionLabel>
-            <SectionHeading>What I work with</SectionHeading>
-          </div>
-          <div className="stagger grid grid-cols-1 md:grid-cols-2 gap-6">
-            {profile.skillsAndProjects.map((s, i) => (
-              <div
-                key={`skill-${i}`}
-                className="rounded-3xl bg-white/80 border border-paper-200 p-8"
-              >
-                <p className="font-serif text-xl font-semibold text-ink-950">{s.title}</p>
-                <p className="mt-2 text-[15px] leading-relaxed text-ink-950/70">{s.description}</p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {s.tags.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-full border border-paper-200 bg-paper-50 px-3 py-1 text-xs text-ink-950/60"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <div className="mt-4 flex flex-wrap gap-3">
-                  {s.links.map((l) => (
-                    <ArrowLink key={l.href} href={l.href} label={l.label} />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ════════ COURSES / ACADEMIC FOUNDATION ════════ */}
-      <section id="courses" className="section-light py-24 md:py-32">
-        <div className="mx-auto max-w-[1200px] px-6">
-          <div className="fade-up mb-12">
-            <SectionLabel>Coursework</SectionLabel>
-            <SectionHeading>Academic Foundation</SectionHeading>
-          </div>
-          <div className="stagger grid grid-cols-1 md:grid-cols-3 gap-6">
-            {profile.courseCategories.map((cat, i) => (
-              <div
-                key={`cat-${i}`}
-                className="rounded-3xl bg-white/80 border border-paper-200 p-8"
-              >
-                <p className="text-xs font-medium tracking-[0.14em] uppercase text-accent-600 mb-4">
-                  {cat.category}
-                </p>
-                <ul className="space-y-3">
-                  {cat.courses.map((c, j) => (
-                    <li key={j} className="flex items-baseline justify-between gap-3">
-                      <span className="text-[15px] text-ink-950/80">{c.name}</span>
-                      {c.note && (
-                        <span className="text-sm font-mono font-medium text-accent-600 shrink-0">
-                          {c.note}
-                        </span>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ════════ CONTACT / FOOTER ════════ */}
-      <section id="contact" className="section-warm py-24 md:py-32">
-        <div className="mx-auto max-w-[1200px] px-6 text-center">
-          <div className="fade-up">
-            <SectionLabel>Get in touch</SectionLabel>
-            <h2 className="font-serif text-3xl md:text-5xl font-semibold tracking-tight text-ink-950">
-              Let&apos;s connect
-            </h2>
-            <p className="mt-4 text-base text-ink-950/60 max-w-[45ch] mx-auto">
-              I am open to collaborations, research opportunities, and conversations about economics and AI.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <a
-                href={`mailto:${profile.email}`}
-                className="inline-flex items-center gap-2 rounded-full bg-ink-950 px-6 py-3 text-sm font-medium text-white transition hover:bg-ink-900"
-              >
-                {profile.email}
-              </a>
-              {profile.links.map((l) => (
-                <a
-                  key={l.href}
-                  href={l.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-paper-200 bg-white px-6 py-3 text-sm font-medium text-ink-950/80 transition hover:bg-paper-50"
-                >
-                  {l.label}
-                </a>
-              ))}
-              <a
-                href={profile.cvHref}
-                className="inline-flex items-center gap-2 rounded-full border border-paper-200 bg-white px-6 py-3 text-sm font-medium text-ink-950/80 transition hover:bg-paper-50"
-              >
-                Download CV
-              </a>
-            </div>
-          </div>
-        </div>
-        <footer className="mt-20 border-t border-paper-200 pt-8 mx-auto max-w-[1200px] px-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-xs tracking-[0.14em] uppercase text-ink-950/40">
-              {profile.footerNote}
-            </p>
-            <p className="text-xs text-ink-950/40">
-              {profile.name} ({profile.displayName}) &middot; {profile.location}
-            </p>
-          </div>
-        </footer>
-      </section>
+          </section>
+        )}
+      </main>
     </>
   );
 }

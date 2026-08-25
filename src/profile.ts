@@ -207,26 +207,38 @@ export const profile: Profile = {
     {
       category: "Mathematics & Statistics",
       courses: [
-        { name: "Calculus", note: "A" },
+        { name: "Advanced Mathematics A I", note: "A" },
+        { name: "Advanced Mathematics A II", note: "A" },
         { name: "Linear Algebra", note: "A" },
-        { name: "Probability and Mathematical Statistics", note: "A" },
-        { name: "Convex Optimization", note: "A" }
+        { name: "Differential Equations", note: "A" },
+        { name: "Probability Theory and Mathematical Statistics", note: "A" }
       ]
     },
     {
-      category: "Computer Science",
+      category: "Computer Science & AI",
       courses: [
-        { name: "Data Structures", note: "A" },
-        { name: "Introduction to Computer Systems (CS15213)", note: "A" }
+        { name: "Towards Artificial Intelligence", note: "A" },
+        { name: "Programming", note: "A" },
+        { name: "Data Structure", note: "A-" },
+        { name: "Principles of Computer Systems", note: "A" },
+        { name: "Mathematical Foundations of Artificial Intelligence", note: "A" },
+        { name: "Introduction to Artificial Intelligence", note: "A" },
+        { name: "Foundations of Software for Artificial Intelligence", note: "A" }
       ]
     },
     {
       category: "Economics & Finance",
       courses: [
+        { name: "Political Economics", note: "A" },
         { name: "Microeconomics", note: "A" },
         { name: "Macroeconomics", note: "A" },
+        { name: "Intermediate Microeconomics", note: "A" },
+        { name: "International Economics", note: "A" },
+        { name: "Econometrics (H)", note: "A" },
+        { name: "Asset Pricing", note: "A" },
         { name: "Game Theory (H)", note: "A+" },
-        { name: "Corporate Finance (H)", note: "A+" }
+        { name: "Corporate Finance (H)", note: "A+" },
+        { name: "Advanced Topics in Economics (H)", note: "A+" }
       ]
     }
   ],
@@ -251,5 +263,5 @@ export const profile: Profile = {
     }
   ],
 
-  footerNote: "Updated March 2026"
+  footerNote: "Updated August 2026"
 };
