@@ -219,7 +219,7 @@ export const profile: Profile = {
       courses: [
         { name: "Towards Artificial Intelligence", note: "A" },
         { name: "Programming", note: "A" },
-        { name: "Data Structure", note: "A-" },
+        { name: "Data Structure", note: "A" },
         { name: "Principles of Computer Systems", note: "A" },
         { name: "Mathematical Foundations of Artificial Intelligence", note: "A" },
         { name: "Introduction to Artificial Intelligence", note: "A" },
