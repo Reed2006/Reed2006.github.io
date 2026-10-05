@@ -305,7 +305,7 @@ export default function Page() {
               </header>
 
               <div className="selected-notes">
-                <span>Accepted and will be presented at CIST2026</span>
+                <span>Accepted and will be presented at CIST2026 and WISE2026</span>
                 <span>Available upon request</span>
               </div>
 
@@ -506,6 +506,33 @@ export default function Page() {
                   <li>
                     Serves as a public outlet for longer-form notes outside the
                     main academic homepage.
+                  </li>
+                </ul>
+              </article>
+
+              <article className="experience-card">
+                <time>Open seminar materials</time>
+                <h3>
+                  <a
+                    href="https://www.dropbox.com/scl/fo/4pwgvb5n8h63bvoisesdh/AJlzxMlxQKiIfEsIGYmd17o?rlkey=ssw0b9drueavlvvy8wyeswkor&st=082nlain&dl=0"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Seminar on ML for Econ
+                  </a>
+                </h3>
+                <p>
+                  Shared materials for our Seminar on Machine Learning for
+                  Economics, available for open download.
+                </p>
+                <ul>
+                  <li>
+                    Collects seminar readings, slides, and related learning
+                    resources.
+                  </li>
+                  <li>
+                    Maintained as a public folder for students and interested
+                    readers.
                   </li>
                 </ul>
               </article>
